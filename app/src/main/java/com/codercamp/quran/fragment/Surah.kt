@@ -1,6 +1,7 @@
 package com.codercamp.quran.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,10 @@ import com.codercamp.quran.adapter.SurahListAdapter
 import com.codercamp.quran.databinding.FragmentSurahBinding
 import com.codercamp.quran.model.SurahList
 import com.codercamp.quran.sql.SurahHelper
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,10 +41,39 @@ class Surah : Fragment() {
 
         loadData()
         MobileAds.initialize(requireContext()) {}
-        loadAds()
+        getAdsIsView()
         return binding?.root
     }
+    private fun getAdsIsView() {
 
+        val database = FirebaseDatabase.getInstance().reference.child("isAdsView")
+
+        val listener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.value == null) {
+                    return
+                }
+                val database = dataSnapshot.value
+
+                if (database != null) {
+                    if (database as Boolean){
+                        binding!!.adView.visibility =View.VISIBLE
+                        loadAds()
+                    }
+                    else{
+                        binding!!.adView.visibility =View.GONE
+                    }
+                }
+                Log.e("lol", "onDataChange: " + database)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        }
+        database.addValueEventListener(listener)
+    }
     private fun loadAds() {
         val adRequest = AdRequest.Builder().build()
         binding!!.adView.loadAd(adRequest)
