@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "479404884936",
+    "firebase_url": "https://al-quran-85120-default-rtdb.firebaseio.com",
+    "project_id": "al-quran-85120",
+    "storage_bucket": "al-quran-85120.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479404884936:android:33603fb3061df277f136fd",
+        "android_client_info": {
+          "package_name": "com.codercamp.quran"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479404884936-rkjb1mh8r7fd9lk2cc2564eu3t6lm59g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh3QvieAsMYkrzHl_oYY4IIVAJhDiaW-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479404884936-rkjb1mh8r7fd9lk2cc2564eu3t6lm59g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

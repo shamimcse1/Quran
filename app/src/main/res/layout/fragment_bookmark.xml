@@ -1,27 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.Bookmark">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.Bookmark"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ayat_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="8dp"/>
 
-    <TextView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/no_bookmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_bookmark"
-        android:textAlignment="center"
-        android:visibility="gone"
-        android:textSize="@dimen/_24sdp"
-        android:fontFamily="@font/open_sans_semibold"
-        android:textColor="?blackWhite"
-        android:layout_gravity="center"
-        android:elevation="2dp"/>
+        app:layout_constraintBottom_toBottomOf="@+id/ayat_recycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"
+        app:lottie_fileName="data.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintTop_toTopOf="@+id/ayat_recycler" />
 
-</FrameLayout>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

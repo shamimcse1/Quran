@@ -15,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:padding="@dimen/_6sdp"
         app:tint="?blackWhite"
+        android:visibility="invisible"
         android:layout_margin="@dimen/_6sdp"
         android:src="@drawable/ic_close"/>
 
@@ -22,14 +23,14 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/al_quran"
         android:textColor="?blackWhite"
-        android:fontFamily="@font/poppins_bold"
         android:textSize="@dimen/_16sdp"
-        app:layout_constraintStart_toEndOf="@id/back"
+        app:layout_constraintBottom_toBottomOf="@id/search"
         app:layout_constraintEnd_toStartOf="@id/search"
-        app:layout_constraintTop_toTopOf="@id/back"
-        app:layout_constraintBottom_toBottomOf="@id/search"/>
+        app:layout_constraintStart_toEndOf="@id/back"
+        app:layout_constraintTop_toTopOf="@id/back" />
 
     <ImageView
         android:id="@+id/search"

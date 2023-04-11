@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.onik.quran">
+    package="com.codercamp.quran">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -27,20 +27,20 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
-            android:name="com.onik.quran.activity.LanguageActivity"
+            android:name="com.codercamp.quran.activity.LanguageActivity"
             android:exported="true" />
-        <activity android:name="com.onik.quran.activity.AboutActivity" />
-        <activity android:name="com.onik.quran.activity.SettingsActivity" />
-        <activity android:name="com.onik.quran.activity.ParaActivity" />
-        <activity android:name="com.onik.quran.activity.QuranMainActivity" />
-        <activity android:name="com.onik.quran.activity.QuranActivity" />
+        <activity android:name="com.codercamp.quran.activity.AboutActivity"/>
+        <activity android:name="com.codercamp.quran.activity.SettingsActivity" />
+        <activity android:name="com.codercamp.quran.activity.ParaActivity" />
+        <activity android:name="com.codercamp.quran.activity.QuranMainActivity" />
+        <activity android:name="com.codercamp.quran.activity.QuranActivity" />
         <activity
-            android:name="com.onik.quran.activity.SurahActivity"
+            android:name="com.codercamp.quran.activity.SurahActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.onik.quran.activity.SplashActivity"
+            android:name="com.codercamp.quran.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,7 +50,7 @@
         </activity>
 
         <service
-            android:name="com.onik.quran.services.AudioService"
+            android:name="com.codercamp.quran.services.AudioService"
             android:enabled="true"
             android:exported="false" />
         <meta-data

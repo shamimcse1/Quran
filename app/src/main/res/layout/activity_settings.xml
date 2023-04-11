@@ -437,7 +437,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.onik.quran.animator.ExpandableLayout
+            <com.codercamp.quran.animator.ExpandableLayout
                 android:id="@+id/translation_expandable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -486,7 +486,7 @@
 
                 </HorizontalScrollView>
 
-            </com.onik.quran.animator.ExpandableLayout>
+            </com.codercamp.quran.animator.ExpandableLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -541,7 +541,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.onik.quran.animator.ExpandableLayout
+            <com.codercamp.quran.animator.ExpandableLayout
                 android:id="@+id/font_size_expandable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -684,7 +684,7 @@
 
                 </LinearLayout>
 
-            </com.onik.quran.animator.ExpandableLayout>
+            </com.codercamp.quran.animator.ExpandableLayout>
 
             <TextView
                 android:layout_width="wrap_content"
