@@ -125,23 +125,17 @@ class Surah : Fragment() {
     }
 
     override fun onPause() {
-        if (binding!!.adView!=null) {
-            binding!!.adView.pause();
-        }
+        binding!!.adView.pause()
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        if (binding!!.adView != null) {
-            binding!!.adView.resume();
-        }
+        binding!!.adView.resume()
     }
 
     override fun onDestroy() {
-        if (binding!!.adView != null) {
-            binding!!.adView.destroy();
-        }
+        binding!!.adView.destroy()
         super.onDestroy();
     }
 }

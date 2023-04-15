@@ -312,6 +312,12 @@ class SurahAyat(private val position: Int, val ayat: Int, private val scroll: Bo
     }
     override fun onDetach() {
         super.onDetach()
+        binding!!.adView.resume()
         binding = null
+
+    }
+    override fun onDestroy() {
+        binding!!.adView.destroy()
+        super.onDestroy();
     }
 }

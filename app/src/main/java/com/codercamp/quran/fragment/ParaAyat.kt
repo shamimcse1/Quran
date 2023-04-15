@@ -1,5 +1,9 @@
 package com.codercamp.quran.fragment
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,9 +15,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
+import com.codercamp.quran.R
 import com.codercamp.quran.adapter.ParaAyatAdapter
+import com.codercamp.quran.adapter.SurahAyatAdapter
+import com.codercamp.quran.application.Constant
 import com.codercamp.quran.constant.Name
 import com.codercamp.quran.constant.Para
+import com.codercamp.quran.database.ApplicationData
 import com.codercamp.quran.databinding.FragmentParaAyatBinding
 import com.codercamp.quran.model.ParaAyat
 import com.codercamp.quran.model.Quran
@@ -30,6 +40,9 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ParaAyat(private val position: Int) : Fragment() {
 
@@ -39,7 +52,10 @@ class ParaAyat(private val position: Int) : Fragment() {
     private var quranHelper: QuranHelper? = null
     private var adapterSurah: ParaAyatAdapter? = null
     private var binding: FragmentParaAyatBinding? = null
-
+    private lateinit var smoothScroller: RecyclerView.SmoothScroller
+    private val data1 = ArrayList<Quran>()
+    private var ayatFollower: BroadcastReceiver? = null
+    private lateinit var layoutManager: LinearLayoutManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -76,13 +92,36 @@ class ParaAyat(private val position: Int) : Fragment() {
     }
 
     private fun initiate() {
+        layoutManager = LinearLayoutManager(requireContext())
+
+        smoothScroller = object : LinearSmoothScroller(activity) {
+            override fun getVerticalSnapPreference(): Int {
+                return SNAP_TO_START
+            }
+        }
+
         CoroutineScope(Dispatchers.Default).launch {
+
+            data1.add(Quran(0, 0, 0, "", "",
+                "", "", "", "", "")
+            )
+            data1.addAll(QuranHelper(requireContext()).readSurahNo(position + 1))
+            val temp = SurahHelper(requireContext()).readData()[position]
+            val t = "${revelation(temp.revelation)}   |   ${
+                NumberFormat.getInstance(
+                    Locale(ApplicationData(requireContext()).language)
+                ).format(temp.verse)}" +
+                    "  " + resources.getString(R.string.verses)
+
+
+
             surahHelper = SurahHelper(requireContext())
             quranHelper = QuranHelper(requireContext())
             QuranHelper(requireContext()).readAyatXtoY(
                 Para().Position()[position-1].startPos
                 , Para().Position()[position-1].endPos
             ).forEach {
+
                 if (it.ayat == 1)
                     data.add(modelExchange(it, true))
                 data.add(modelExchange(it, false))
@@ -96,7 +135,11 @@ class ParaAyat(private val position: Int) : Fragment() {
             }
         }
     }
-
+    private fun revelation(revelation: String): String {
+        return if (revelation == "Meccan")
+            resources.getString(R.string.meccan)
+        else resources.getString(R.string.medinan)
+    }
     private fun clearAll() {
         data.clear()
         adapterSurah?.notifyDataSetChanged()
@@ -281,9 +324,7 @@ class ParaAyat(private val position: Int) : Fragment() {
     }
 
     override fun onPause() {
-        if (binding!!.adView!=null) {
-            binding!!.adView.pause()
-        }
+        binding!!.adView.pause()
         super.onPause()
     }
 

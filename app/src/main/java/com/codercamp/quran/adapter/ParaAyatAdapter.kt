@@ -1,5 +1,6 @@
 package com.codercamp.quran.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -15,6 +16,7 @@ import com.codercamp.quran.R
 import com.codercamp.quran.database.ApplicationData
 import com.codercamp.quran.model.ParaAyat
 import com.codercamp.quran.model.Quran
+import com.codercamp.quran.process.AudioProcess
 import com.codercamp.quran.sql.QuranHelper
 import com.codercamp.quran.sql.SurahHelper
 import java.text.NumberFormat
@@ -22,7 +24,7 @@ import java.util.*
 
 class ParaAyatAdapter(val context: Context, val data: ArrayList<ParaAyat>)
     : RecyclerView.Adapter<ParaAyatAdapter.ViewHolder>() {
-
+    private var reading = -1
     companion object {
         const val BISMILLAH = 1
         const val DEFAULT = 0
@@ -93,7 +95,7 @@ class ParaAyatAdapter(val context: Context, val data: ArrayList<ParaAyat>)
                             Html.fromHtml(it.terjemahan, Html.FROM_HTML_MODE_COMPACT)
                         } else Html.fromHtml(it.terjemahan)
 
-                        maintainClicks(share, bookmark, it)
+                        maintainClicks(play,share, bookmark, it)
                     }
                 } else {
                     holder.name?.text = it.name
@@ -126,7 +128,7 @@ class ParaAyatAdapter(val context: Context, val data: ArrayList<ParaAyat>)
         )
     }
 
-    private fun maintainClicks(share: ImageView?, bookmark: ImageView?, it: ParaAyat) {
+    private fun maintainClicks(play: ImageView?,share: ImageView?, bookmark: ImageView?, it: ParaAyat) {
         share?.setOnClickListener { v ->
             var text = "Surah-> ${SurahHelper(context).readDataAt(it.surah)!!.name}," +
                     " Ayat-> ${it.ayat}\n\n"
@@ -169,6 +171,10 @@ class ParaAyatAdapter(val context: Context, val data: ArrayList<ParaAyat>)
                 )
             )
         }
+        play?.setOnClickListener { _->
+            AudioProcess(context as Activity).play(it.surah, it.ayat)
+        }
+
     }
 
     private val numberFormat: NumberFormat =
