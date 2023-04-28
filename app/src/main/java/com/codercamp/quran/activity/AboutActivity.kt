@@ -237,17 +237,17 @@ class AboutActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        binding!!.adView.pause()
+        binding.adView.pause()
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        binding!!.adView.resume()
+        binding.adView.resume()
     }
 
     override fun onDestroy() {
-        binding!!.adView.destroy()
+        binding.adView.destroy()
         super.onDestroy();
     }
 

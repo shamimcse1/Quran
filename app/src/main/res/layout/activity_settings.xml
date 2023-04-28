@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -37,9 +38,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        ads:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintTop_toBottomOf="@id/title">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -51,101 +52,101 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+
                 android:text="@string/general"
                 android:textColor="?blackWhite"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="24dp"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/language"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?selectableItemBackground">
+                android:foreground="?selectableItemBackground"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
 
                 <ImageView
                     android:id="@+id/language_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_baseline_language_24"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_baseline_language_24"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/language"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/language_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_baseline_chevron_right_24"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_baseline_chevron_right_24"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+
                 android:text="@string/theme"
                 android:textColor="?blackWhite"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="24dp"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp">
 
                 <ImageView
                     android:id="@+id/dark_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:rotation="310"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_nightlight"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_nightlight"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/dark_mode"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/dark_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switch_theme"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -153,10 +154,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginBottom="8dp"
-                android:background="#267C7C7C"/>
+                android:background="#267C7C7C" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -169,51 +170,51 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:rotation="310"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_color_lens"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_color_lens"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/primary_color"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/color_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <FrameLayout
                         android:id="@+id/green"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
+                        android:background="@drawable/rounded_back"
+                        android:backgroundTint="@color/purple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?selectableItemBackground"
-                        android:backgroundTint="@color/purple"
-                        android:background="@drawable/rounded_back">
+                        android:foreground="?selectableItemBackground">
 
                         <ImageView
                             android:id="@+id/green_check"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:elevation="2dp"
-                            app:tint="@color/white"
-                            android:visibility="gone"
                             android:padding="4dp"
-                            android:src="@drawable/ic_check" />
+                            android:src="@drawable/ic_check"
+                            android:visibility="gone"
+                            app:tint="@color/white" />
 
                     </FrameLayout>
 
@@ -222,21 +223,21 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginStart="8dp"
+                        android:background="@drawable/rounded_back"
+                        android:backgroundTint="@color/blue"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?selectableItemBackground"
-                        android:backgroundTint="@color/blue"
-                        android:background="@drawable/rounded_back">
+                        android:foreground="?selectableItemBackground">
 
                         <ImageView
                             android:id="@+id/blue_check"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:elevation="2dp"
-                            app:tint="@color/white"
                             android:padding="4dp"
+                            android:src="@drawable/ic_check"
                             android:visibility="gone"
-                            android:src="@drawable/ic_check" />
+                            app:tint="@color/white" />
 
                     </FrameLayout>
 
@@ -244,22 +245,22 @@
                         android:id="@+id/orange"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:backgroundTint="@color/orange"
                         android:layout_marginStart="8dp"
+                        android:background="@drawable/rounded_back"
+                        android:backgroundTint="@color/orange"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?selectableItemBackground"
-                        android:background="@drawable/rounded_back">
+                        android:foreground="?selectableItemBackground">
 
                         <ImageView
                             android:id="@+id/orange_check"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:elevation="2dp"
-                            app:tint="@color/white"
                             android:padding="4dp"
+                            android:src="@drawable/ic_check"
                             android:visibility="gone"
-                            android:src="@drawable/ic_check" />
+                            app:tint="@color/white" />
 
                     </FrameLayout>
 
@@ -270,72 +271,71 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+
                 android:text="@string/al_quran"
                 android:textColor="?blackWhite"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_marginTop="24dp"
-                android:layout_marginStart="24dp"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp">
 
                 <ImageView
                     android:id="@+id/quran_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:src="@drawable/ic_quran"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_quran"
-                    app:tint="?attr/colorControlNormal"/>
+                    app:tint="?attr/colorControlNormal" />
 
                 <TextView
                     android:id="@+id/arabic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/quran"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/quran_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <HorizontalScrollView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none"
                     android:layout_marginStart="16dp"
-                    app:layout_constraintStart_toEndOf="@id/arabic_text"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:scrollbars="none"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/arabic_text"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/arabic_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        app:singleSelection="true"
-                        app:selectionRequired="true">
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/indoPk"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="IndoPak"/>
+                            android:text="IndoPak" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/uthmani"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Uthmani"/>
+                            android:text="Uthmani" />
 
                     </com.google.android.material.chip.ChipGroup>
 
@@ -347,10 +347,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginBottom="8dp"
-                android:background="#267C7C7C"/>
+                android:background="#267C7C7C" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -362,31 +362,31 @@
                     android:id="@+id/transliteration_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_baseline_record_voice_over_24"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_baseline_record_voice_over_24"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/pronunciation"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/transliteration_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/transliteration_switch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -394,10 +394,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginBottom="8dp"
-                android:background="#267C7C7C"/>
+                android:background="#267C7C7C" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -409,31 +409,31 @@
                     android:id="@+id/font_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_translate"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_translate"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/translation"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/font_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/translation_switch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -441,8 +441,8 @@
                 android:id="@+id/translation_expandable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:el_expanded="true"
                 app:el_duration="500"
+                app:el_expanded="true"
                 app:el_parallax="0.5">
 
                 <HorizontalScrollView
@@ -456,31 +456,31 @@
                         android:id="@+id/translation_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
                         android:layout_gravity="end"
-                        app:singleSelection="true"
-                        app:selectionRequired="true"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/c_eng"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="English"/>
+                            android:text="English" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/c_taisirul"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:text="Taisirul Quran"/>
+                            android:text="Taisirul Quran"
+                            android:visibility="gone" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/c_muhiuddin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bangla"/>
+                            android:text="Bangla" />
 
                     </com.google.android.material.chip.ChipGroup>
 
@@ -492,10 +492,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginBottom="8dp"
-                android:background="#267C7C7C"/>
+                android:background="#267C7C7C" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/font_size"
@@ -508,36 +508,36 @@
                     android:id="@+id/font_size_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_font_download"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_font_download"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/font_sizes"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/font_size_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/open_font"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_drop_down_circle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:padding="4dp"
+                    android:background="@drawable/rounded_back"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="@drawable/rounded_back"
                     android:foreground="?selectableItemBackground"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    android:padding="4dp"
+                    android:src="@drawable/ic_arrow_drop_down_circle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -545,10 +545,10 @@
                 android:id="@+id/font_size_expandable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:el_expanded="false"
-                app:el_duration="500"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
+                app:el_duration="500"
+                app:el_expanded="false"
                 app:el_parallax="0.5">
 
                 <LinearLayout
@@ -559,15 +559,15 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="24dp">
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:id="@+id/arabic_font_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:fontFamily="@font/poppins_semibold"
+
                             android:text="Arabic Font"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -580,10 +580,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:max="12"
-                            app:layout_constraintStart_toEndOf="@id/arabic_font_text"
-                            app:layout_constraintEnd_toStartOf="@id/arabic_size_text"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintEnd_toStartOf="@id/arabic_size_text"
+                            app:layout_constraintStart_toEndOf="@id/arabic_font_text"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/arabic_size_text"
@@ -591,25 +591,25 @@
                             android:layout_height="wrap_content"
                             android:text="16sp"
                             android:textSize="16sp"
-                            android:fontFamily="@font/poppins_semibold"
-                            app:layout_constraintTop_toTopOf="parent"
+
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="24dp">
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:id="@+id/transliteration_font_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:fontFamily="@font/poppins_semibold"
+
                             android:text="@string/pronunciation"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -622,10 +622,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:max="12"
-                            app:layout_constraintStart_toEndOf="@id/transliteration_font_text"
-                            app:layout_constraintEnd_toStartOf="@id/transliteration_size_text"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintEnd_toStartOf="@id/transliteration_size_text"
+                            app:layout_constraintStart_toEndOf="@id/transliteration_font_text"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/transliteration_size_text"
@@ -633,25 +633,25 @@
                             android:layout_height="wrap_content"
                             android:text="16sp"
                             android:textSize="16sp"
-                            android:fontFamily="@font/poppins_semibold"
-                            app:layout_constraintTop_toTopOf="parent"
+
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="24dp">
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:id="@+id/translation_font_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:fontFamily="@font/poppins_semibold"
+
                             android:text="Translation Font"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -664,10 +664,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:max="12"
-                            app:layout_constraintStart_toEndOf="@id/translation_font_text"
-                            app:layout_constraintEnd_toStartOf="@id/translation_size_text"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintEnd_toStartOf="@id/translation_size_text"
+                            app:layout_constraintStart_toEndOf="@id/translation_font_text"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/translation_size_text"
@@ -675,10 +675,10 @@
                             android:layout_height="wrap_content"
                             android:text="16sp"
                             android:textSize="16sp"
-                            android:fontFamily="@font/poppins_semibold"
-                            app:layout_constraintTop_toTopOf="parent"
+
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -689,44 +689,44 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+
                 android:text="@string/application"
                 android:textColor="?blackWhite"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_marginTop="24dp"
-                android:layout_marginStart="24dp"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/terms_condition"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
                 android:layout_marginTop="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?selectableItemBackground">
+                android:foreground="?selectableItemBackground"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
 
                 <ImageView
                     android:id="@+id/terms_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_text_snippet"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_text_snippet"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/terms_and_condition"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/terms_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -735,38 +735,38 @@
                 android:layout_height="1dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:background="#267C7C7C"/>
+                android:background="#267C7C7C" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/policy"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?selectableItemBackground">
+                android:foreground="?selectableItemBackground"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
 
                 <ImageView
                     android:id="@+id/policy_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_baseline_policy_24"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_baseline_policy_24"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/privacy_policy"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/policy_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -775,38 +775,38 @@
                 android:layout_height="1dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:background="#267C7C7C"/>
+                android:background="#267C7C7C" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/feedback"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?selectableItemBackground">
+                android:foreground="?selectableItemBackground"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
 
                 <ImageView
                     android:id="@+id/feedback_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_mail"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_mail"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/help_and_feedback"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/feedback_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -815,44 +815,51 @@
                 android:layout_height="1dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:background="#267C7C7C"/>
+                android:background="#267C7C7C" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/about"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginBottom="8dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?selectableItemBackground">
+                android:foreground="?selectableItemBackground"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
 
                 <ImageView
                     android:id="@+id/about_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_info"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_info"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:text="@string/about"
                     android:textSize="16sp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins_semibold"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/about_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>
-
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

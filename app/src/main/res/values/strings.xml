@@ -272,6 +272,6 @@
     </string-array>
 
     <string name="banner_ad_sample" translatable="false">Banner Ad Sample</string>
-    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-1337577089653332/7324944680</string>
 
 </resources>

@@ -188,7 +188,7 @@ class TACPP(val context: Activity) {
                 "                $p<strong>Contact Us</strong>$p\n" +
                 "                  If you have any questions or suggestions about my\n" +
                 "                  Terms and Conditions, do not hesitate to contact me\n" +
-                "                  at <strong>nelucode@gmail.com</strong>.\n" +
+                "                  at <strong>codercampapp@gmail.com</strong>.\n" +
                 "</font>" +
                 "    </body>\n" +
                 "    </html>\n" +
@@ -300,7 +300,7 @@ class TACPP(val context: Activity) {
                 "                  this page.\n" +
                 "                $p This policy is effective as of 2025-12-31$p<strong>Contact Us</strong>$p\n" +
                 "                  If you have any questions or suggestions about my\n" +
-                "                  Privacy Policy, do not hesitate to contact me at <strong>codercamp@gmail.com</strong>.\n" +
+                "                  Privacy Policy, do not hesitate to contact me at <strong>codercampapp@gmail.com</strong>.\n" +
                 "</font>" +
                 "    </body>\n" +
                 "    </html>"
