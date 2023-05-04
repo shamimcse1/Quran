@@ -14,7 +14,7 @@ import com.codercamp.quran.model.SurahList
 import java.text.NumberFormat
 import java.util.*
 
-class SurahListAdapter(val context: Context, val data: ArrayList<SurahList>):
+class SurahListAdapter(val context: Context, val data: ArrayList<SurahList>, private val itemClickEvent: ItemClickEvent):
     RecyclerView.Adapter<SurahListAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -45,7 +45,9 @@ class SurahListAdapter(val context: Context, val data: ArrayList<SurahList>):
 
         holder.itemView.setOnClickListener {
             SurahActivity.launch(context, position, 0)
+            itemClickEvent.itemClick(position)
         }
+
     }
 
     private fun revelation(revelation: String): String {
@@ -60,4 +62,8 @@ class SurahListAdapter(val context: Context, val data: ArrayList<SurahList>):
 
     private val numberFormat: NumberFormat =
         NumberFormat.getInstance(Locale(ApplicationData(context).language))
+}
+
+interface ItemClickEvent {
+    fun itemClick(position: Int)
 }

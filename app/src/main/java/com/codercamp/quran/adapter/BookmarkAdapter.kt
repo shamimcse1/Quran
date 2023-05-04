@@ -22,7 +22,7 @@ import com.codercamp.quran.sql.QuranHelper
 import com.codercamp.quran.sql.SurahHelper
 
 class BookmarkAdapter(val context: Context, val data: ArrayList<Quran>,
-                      private val bookmarkInterface: Bookmark)
+                      private val bookmarkInterface: Bookmark,private val itemClickEvent: ItemClickEvent)
     : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
 
     private val quran = QuranHelper(context)
@@ -116,6 +116,7 @@ class BookmarkAdapter(val context: Context, val data: ArrayList<Quran>,
 
                 holder.itemView.setOnClickListener { _->
                     SurahActivity.launch(context, it.surah-1, it.ayat)
+                    itemClickEvent.itemClick(position)
                 }
 
 

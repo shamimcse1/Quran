@@ -12,10 +12,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
 import com.codercamp.quran.BuildConfig
 import com.codercamp.quran.application.Constant.Companion.EMAIL
 import com.codercamp.quran.application.Constant.Companion.FACEBOOK
@@ -31,6 +27,9 @@ import com.codercamp.quran.databinding.ActivityAboutBinding
 import com.codercamp.quran.theme.ApplicationTheme
 import com.codercamp.quran.uiClass.CustomToast
 import com.codercamp.quran.utils.ContextUtils
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -38,7 +37,7 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 class AboutActivity : AppCompatActivity() {
-
+    var interstitialAd: InterstitialAd? = null
     private lateinit var binding: ActivityAboutBinding
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -250,5 +249,71 @@ class AboutActivity : AppCompatActivity() {
         binding.adView.destroy()
         super.onDestroy();
     }
+    private fun interstitialAd() {
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(
+           this,
+            "ca-app-pub-1337577089653332/2717493562",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    // The mInterstitialAd reference will be null until
+                    // an ad is loaded.
+                    this@AboutActivity.interstitialAd = interstitialAd
+                    Log.i("TAG", "onAdLoaded")
+                    // Toast.makeText(BookViewActivity.this, "onAdLoaded()", Toast.LENGTH_SHORT).show();
+                    interstitialAd.fullScreenContentCallback =
+                        object : FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                // Called when fullscreen content is dismissed.
+                                // Make sure to set your reference to null so you don't
+                                // show it a second time.
+                                this@AboutActivity.interstitialAd = null
+                                Log.d("TAG", "The ad was dismissed.")
+                            }
 
+                            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                // Called when fullscreen content failed to show.
+                                // Make sure to set your reference to null so you don't
+                                // show it a second time.
+                                this@AboutActivity.interstitialAd = null
+                                Log.d("TAG", "The ad failed to show.")
+                            }
+
+                            override fun onAdShowedFullScreenContent() {
+                                // Called when fullscreen content is shown.
+                                Log.d("TAG", "The ad was shown.")
+                            }
+                        }
+                }
+
+                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    // Handle the error
+                    Log.i("TAG", loadAdError.message)
+                    interstitialAd = null
+                    @SuppressLint("DefaultLocale") val error = String.format(
+                        "domain: %s, code: %d, message: %s",
+                        loadAdError.domain,
+                        loadAdError.code,
+                        loadAdError.message
+                    )
+                    Log.d("Error", error)
+                    // Toast.makeText(BookViewActivity.this, "onAdFailedToLoad() with error: " + error, Toast.LENGTH_SHORT).show();
+                }
+            })
+    }
+
+    private fun showInterstitial() {
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (interstitialAd != null) {
+            interstitialAd!!.show(this)
+        } else {
+            //Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    override fun onBackPressed() {
+        showInterstitial()
+        super.onBackPressed()
+    }
 }

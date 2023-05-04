@@ -1,5 +1,6 @@
 package com.codercamp.quran.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,13 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codercamp.quran.adapter.BookmarkAdapter
+import com.codercamp.quran.adapter.ItemClickEvent
 import com.codercamp.quran.databinding.FragmentBookmarkBinding
 import com.codercamp.quran.`interface`.Bookmark
 import com.codercamp.quran.model.Quran
 import com.codercamp.quran.sql.QuranHelper
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -23,33 +25,34 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class Bookmark : Fragment() {
+class Bookmark : Fragment(), ItemClickEvent {
 
     private val data = ArrayList<Quran>()
     private var adapter: BookmarkAdapter? = null
     private var binding: FragmentBookmarkBinding? = null
-
+    var interstitialAd: InterstitialAd? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentBookmarkBinding.inflate(inflater, container, false)
 
-        adapter = BookmarkAdapter(requireContext(), data
-            , object : Bookmark {
-                override fun removed(pos: Int) {
-                    data.removeAt(pos)
-                    adapter?.notifyItemRemoved(pos)
-                    adapter?.notifyItemRangeChanged(pos, data.size)
-                    binding?.noBookmark?.visibility =
-                        if (data.size > 0) View.GONE
-                        else View.VISIBLE
-                }
-            })
+        adapter = BookmarkAdapter(requireContext(), data, object : Bookmark {
+            override fun removed(pos: Int) {
+                data.removeAt(pos)
+                adapter?.notifyItemRemoved(pos)
+                adapter?.notifyItemRangeChanged(pos, data.size)
+                binding?.noBookmark?.visibility =
+                    if (data.size > 0) View.GONE
+                    else View.VISIBLE
+            }
+        }, this)
         binding?.ayatRecycler?.layoutManager = LinearLayoutManager(requireContext())
         binding?.ayatRecycler?.adapter = adapter
         getAdsIsView()
         return binding?.root
     }
+
     private fun getAdsIsView() {
 
         val database = FirebaseDatabase.getInstance().reference.child("isAdsView")
@@ -63,15 +66,15 @@ class Bookmark : Fragment() {
                 val database = dataSnapshot.value
 
                 if (database != null) {
-                    if (database as Boolean){
-                        binding!!.adView.visibility =View.VISIBLE
+                    if (database as Boolean) {
+                        binding!!.adView.visibility = View.VISIBLE
                         loadAds()
-                    }
-                    else{
-                        binding!!.adView.visibility =View.GONE
+                        interstitialAd()
+                    } else {
+                        binding!!.adView.visibility = View.GONE
                     }
                 }
-                Log.e("lol", "onDataChange: " + database)
+                Log.e("Result", "onDataChange: $database")
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -80,25 +83,29 @@ class Bookmark : Fragment() {
         }
         database.addValueEventListener(listener)
     }
+
     private fun loadAds() {
         val adRequest = AdRequest.Builder().build()
         binding!!.adView.loadAd(adRequest)
 
-        binding!!.adView.adListener = object : AdListener(){
+        binding!!.adView.adListener = object : AdListener() {
             override fun onAdFailedToLoad(p0: LoadAdError) {
                 super.onAdFailedToLoad(p0)
                 val toastMessage: String = "ad fail to load"
             }
+
             override fun onAdLoaded() {
                 super.onAdLoaded()
                 val toastMessage: String = "ad loaded"
 
             }
+
             override fun onAdOpened() {
                 super.onAdOpened()
                 val toastMessage: String = "ad is open"
 
             }
+
             override fun onAdClicked() {
                 super.onAdClicked()
                 val toastMessage: String = "ad is clicked"
@@ -109,6 +116,7 @@ class Bookmark : Fragment() {
                 val toastMessage: String = "ad is closed"
 
             }
+
             override fun onAdImpression() {
                 super.onAdImpression()
                 val toastMessage: String = "ad impression"
@@ -116,6 +124,7 @@ class Bookmark : Fragment() {
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
         CoroutineScope(Dispatchers.Default).launch {
@@ -130,6 +139,7 @@ class Bookmark : Fragment() {
         }
         binding!!.adView.resume()
     }
+
     override fun onPause() {
         binding!!.adView.pause()
         super.onPause()
@@ -139,5 +149,72 @@ class Bookmark : Fragment() {
     override fun onDestroy() {
         binding!!.adView.destroy()
         super.onDestroy()
+    }
+
+    private fun interstitialAd() {
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(
+            requireContext(),
+            "ca-app-pub-1337577089653332/2717493562",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    // The mInterstitialAd reference will be null until
+                    // an ad is loaded.
+                    this@Bookmark.interstitialAd = interstitialAd
+                    Log.i("TAG", "onAdLoaded")
+                    // Toast.makeText(BookViewActivity.this, "onAdLoaded()", Toast.LENGTH_SHORT).show();
+                    interstitialAd.fullScreenContentCallback =
+                        object : FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                // Called when fullscreen content is dismissed.
+                                // Make sure to set your reference to null so you don't
+                                // show it a second time.
+                                this@Bookmark.interstitialAd = null
+                                Log.d("TAG", "The ad was dismissed.")
+                            }
+
+                            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                // Called when fullscreen content failed to show.
+                                // Make sure to set your reference to null so you don't
+                                // show it a second time.
+                                this@Bookmark.interstitialAd = null
+                                Log.d("TAG", "The ad failed to show.")
+                            }
+
+                            override fun onAdShowedFullScreenContent() {
+                                // Called when fullscreen content is shown.
+                                Log.d("TAG", "The ad was shown.")
+                            }
+                        }
+                }
+
+                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    // Handle the error
+                    Log.i("TAG", loadAdError.message)
+                    interstitialAd = null
+                    @SuppressLint("DefaultLocale") val error = String.format(
+                        "domain: %s, code: %d, message: %s",
+                        loadAdError.domain,
+                        loadAdError.code,
+                        loadAdError.message
+                    )
+                    Log.d("Error", error)
+                    // Toast.makeText(BookViewActivity.this, "onAdFailedToLoad() with error: " + error, Toast.LENGTH_SHORT).show();
+                }
+            })
+    }
+
+    private fun showInterstitial() {
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (interstitialAd != null) {
+            interstitialAd!!.show(requireActivity())
+        } else {
+            //Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    override fun itemClick(position: Int) {
+        showInterstitial()
     }
 }

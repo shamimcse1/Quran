@@ -16,7 +16,7 @@ import com.codercamp.quran.sql.SurahHelper
 import java.text.NumberFormat
 import java.util.*
 
-class ParaListAdapter(val context: Context, val data: ArrayList<JuzModel>):
+class ParaListAdapter(val context: Context, val data: ArrayList<JuzModel>,private val itemClickEvent: ItemClickEvent):
     RecyclerView.Adapter<ParaListAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -51,6 +51,7 @@ class ParaListAdapter(val context: Context, val data: ArrayList<JuzModel>):
 
                 holder.itemView.setOnClickListener { _->
                     ParaActivity.launch(context, it.paraNo)
+                    itemClickEvent.itemClick(position)
                 }
             }
         }
