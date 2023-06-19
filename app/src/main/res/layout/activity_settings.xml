@@ -473,8 +473,7 @@
                             android:id="@+id/c_taisirul"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Taisirul Quran"
-                            android:visibility="gone" />
+                            android:text="Turkish"/>
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/c_muhiuddin"
