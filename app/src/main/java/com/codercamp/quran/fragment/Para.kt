@@ -35,8 +35,10 @@ class Para : Fragment(),ItemClickEvent {
             requireContext(), Para().Position()
         ,this)
         MobileAds.initialize(requireContext()) {}
-        getAdsIsView()
-
+        //getAdsIsView()
+        binding!!.adView.visibility =View.VISIBLE
+        loadAds()
+        interstitialAd()
         return binding?.root
     }
 

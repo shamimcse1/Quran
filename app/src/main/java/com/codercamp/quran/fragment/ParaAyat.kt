@@ -87,7 +87,9 @@ class ParaAyat(private val position: Int) : Fragment() {
         binding?.searchIcon?.setOnClickListener {
             searchIconClick()
         }
-        getAdsIsView()
+        //getAdsIsView()
+        binding!!.adView.visibility =View.VISIBLE
+        loadAds()
         return binding?.root
     }
 

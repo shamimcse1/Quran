@@ -144,7 +144,9 @@ class AboutActivity : AppCompatActivity() {
     }
 
     private fun getAdsIsView() {
-
+        binding.adView.visibility =View.VISIBLE
+        loadAds()
+        interstitialAd()
         val database = FirebaseDatabase.getInstance().reference.child("isAdsView")
 
         val listener = object : ValueEventListener {
@@ -157,8 +159,7 @@ class AboutActivity : AppCompatActivity() {
 
                 if (database != null) {
                     if (database as Boolean){
-                        binding.adView.visibility =View.VISIBLE
-                        loadAds()
+
                     }
                     else{
                         binding.adView.visibility =View.GONE

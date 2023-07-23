@@ -49,7 +49,10 @@ class Bookmark : Fragment(), ItemClickEvent {
         }, this)
         binding?.ayatRecycler?.layoutManager = LinearLayoutManager(requireContext())
         binding?.ayatRecycler?.adapter = adapter
-        getAdsIsView()
+        //getAdsIsView()
+        binding!!.adView.visibility = View.VISIBLE
+        loadAds()
+        interstitialAd()
         return binding?.root
     }
 

@@ -107,7 +107,9 @@ class SurahAyat(private val position: Int, val ayat: Int, private val scroll: Bo
             closeKeyboard(binding?.searchText)
         }
 
-        getAdsIsView()
+        //getAdsIsView()
+        binding!!.adView.visibility =View.VISIBLE
+        loadAds()
         return binding?.root
     }
 
@@ -318,6 +320,6 @@ class SurahAyat(private val position: Int, val ayat: Int, private val scroll: Bo
     }
     override fun onDestroy() {
         binding!!.adView.destroy()
-        super.onDestroy();
+        super.onDestroy()
     }
 }

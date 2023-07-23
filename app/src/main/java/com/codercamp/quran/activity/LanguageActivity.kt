@@ -53,7 +53,8 @@ class LanguageActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, Intent())
 
         MobileAds.initialize(this) {}
-        getAdsIsView()
+        binding.adView.visibility = View.VISIBLE
+        loadAds()
     }
 
     override fun attachBaseContext(newBase: Context?) {
@@ -62,7 +63,7 @@ class LanguageActivity : AppCompatActivity() {
         super.attachBaseContext(localeUpdatedContext)
     }
 
-    private fun getAdsIsView() {
+   private fun getAdsIsView() {
 
         val database = FirebaseDatabase.getInstance().reference.child("isAdsView")
 
@@ -76,8 +77,7 @@ class LanguageActivity : AppCompatActivity() {
 
                 if (database != null) {
                     if (database as Boolean){
-                        binding.adView.visibility = View.VISIBLE
-                        loadAds()
+
                     }
                     else{
                         binding.adView.visibility = View.GONE

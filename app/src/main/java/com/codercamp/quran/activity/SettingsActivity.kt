@@ -57,8 +57,10 @@ class SettingsActivity : AppCompatActivity() {
         binding.openFont.clipToOutline = true
 
         MobileAds.initialize(this) {}
-        getAdsIsView()
-
+       // getAdsIsView()
+        binding.adView.visibility =View.VISIBLE
+        loadAds()
+        interstitialAd()
         binding.back.setOnClickListener { finish() }
 
         applicationData = ApplicationData(this)

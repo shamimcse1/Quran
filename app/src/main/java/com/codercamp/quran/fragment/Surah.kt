@@ -43,7 +43,10 @@ class Surah : Fragment(),ItemClickEvent {
 
         loadData()
         MobileAds.initialize(requireContext()) {}
-        getAdsIsView()
+        //getAdsIsView()
+        binding!!.adView.visibility =View.VISIBLE
+        loadAds()
+        interstitialAd()
         return binding?.root
     }
     private fun getAdsIsView() {
