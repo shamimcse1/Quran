@@ -19,8 +19,14 @@ import com.codercamp.quran.application.Constant.Companion.EMAIL
 import com.codercamp.quran.database.ApplicationData
 import com.codercamp.quran.databinding.ActivitySettingsBinding
 import com.codercamp.quran.external.TACPP
+import com.codercamp.quran.fragment.Surah
 import com.codercamp.quran.theme.ApplicationTheme
 import com.codercamp.quran.utils.ContextUtils
+import com.facebook.ads.Ad
+import com.facebook.ads.AdSize
+import com.facebook.ads.AdView
+import com.facebook.ads.AudienceNetworkAds
+import com.facebook.ads.InterstitialAdListener
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -31,7 +37,9 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 class SettingsActivity : AppCompatActivity() {
-
+    private var facebookAdsView: com.facebook.ads.AdView?= null
+    private var facebookInterstitialAd: com.facebook.ads.InterstitialAd? = null
+    private val TAG: String = SettingsActivity::class.java.simpleName
     private lateinit var applicationData: ApplicationData
     private lateinit var binding: ActivitySettingsBinding
     var interstitialAd: InterstitialAd? = null
@@ -56,6 +64,7 @@ class SettingsActivity : AppCompatActivity() {
         binding.orange.clipToOutline = true
         binding.openFont.clipToOutline = true
 
+        AudienceNetworkAds.initialize(this)
         MobileAds.initialize(this) {}
        // getAdsIsView()
         binding.adView.visibility =View.VISIBLE
@@ -129,7 +138,50 @@ class SettingsActivity : AppCompatActivity() {
         initFontSeekBarSeek()
 
     }
+    fun loadFacebookBannerAds(){
+        facebookAdsView = AdView(this, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
+        binding!!.bannerContainer.visibility = View.VISIBLE
+        binding!!.bannerContainer.addView(facebookAdsView)
+        facebookAdsView!!.loadAd()
 
+    }
+    private fun showFacebookInterstitialAd() {
+        facebookInterstitialAd =
+            com.facebook.ads.InterstitialAd(
+               this,
+                "1007569787153234_1007570607153152"
+            )
+        val interstitialAdListener: InterstitialAdListener = object : InterstitialAdListener {
+            override fun onError(ad: Ad, adError: com.facebook.ads.AdError) {
+                Log.e(TAG, "Interstitial ad failed to load: " + adError.errorMessage)
+            }
+
+            override fun onAdLoaded(ad: Ad) {
+                facebookInterstitialAd!!.show()
+            }
+
+            override fun onAdClicked(ad: Ad) {
+                Log.d(TAG, "Interstitial ad clicked!")
+            }
+
+            override fun onLoggingImpression(ad: Ad) {
+                Log.d(TAG, "Interstitial ad impression logged!")
+            }
+
+            override fun onInterstitialDisplayed(ad: Ad) {
+                Log.e(TAG, "Interstitial ad displayed.")
+            }
+
+            override fun onInterstitialDismissed(ad: Ad) {
+                Log.e(TAG, "Interstitial ad dismissed.")
+            }
+        }
+        facebookInterstitialAd!!.loadAd(
+            facebookInterstitialAd!!.buildLoadAdConfig()
+                .withAdListener(interstitialAdListener)
+                .build()
+        )
+    }
     private fun checkColor() {
         binding.greenCheck.visibility = View.GONE
         binding.blueCheck.visibility = View.GONE
@@ -334,43 +386,13 @@ class SettingsActivity : AppCompatActivity() {
         super.attachBaseContext(localeUpdatedContext)
     }
 
-    private fun getAdsIsView() {
-
-        val database = FirebaseDatabase.getInstance().reference.child("isAdsView")
-
-        val listener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                if (dataSnapshot.value == null) {
-                    return
-                }
-                val database = dataSnapshot.value
-
-                if (database != null) {
-                    if (database as Boolean){
-                        binding.adView.visibility =View.VISIBLE
-                        loadAds()
-                        interstitialAd()
-                    }
-                    else{
-                        binding.adView.visibility =View.GONE
-                    }
-                }
-                Log.e("Result", "onDataChange: $database")
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        }
-        database.addValueEventListener(listener)
-    }
     private fun loadAds() {
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
         binding.adView.adListener = object : AdListener() {
             override fun onAdFailedToLoad(p0: LoadAdError) {
+                loadFacebookBannerAds()
                 super.onAdFailedToLoad(p0)
                 val toastMessage: String = "ad fail to load"
             }
@@ -448,6 +470,7 @@ class SettingsActivity : AppCompatActivity() {
                                 // Called when fullscreen content failed to show.
                                 // Make sure to set your reference to null so you don't
                                 // show it a second time.
+                                showFacebookInterstitialAd()
                                 this@SettingsActivity.interstitialAd = null
                                 Log.d("TAG", "The ad failed to show.")
                             }

@@ -12,6 +12,12 @@ import com.codercamp.quran.adapter.ItemClickEvent
 import com.codercamp.quran.adapter.ParaListAdapter
 import com.codercamp.quran.constant.Para
 import com.codercamp.quran.databinding.FragmentParaBinding
+import com.codercamp.quran.`interface`.Bookmark
+import com.facebook.ads.Ad
+import com.facebook.ads.AdSize
+import com.facebook.ads.AdView
+import com.facebook.ads.AudienceNetworkAds
+import com.facebook.ads.InterstitialAdListener
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -22,7 +28,9 @@ import com.google.firebase.database.ValueEventListener
 
 
 class Para : Fragment(),ItemClickEvent {
-
+    private var facebookAdsView: com.facebook.ads.AdView?= null
+    private var facebookInterstitialAd: com.facebook.ads.InterstitialAd? = null
+    private val TAG: String = Para::class.java.simpleName
     private var binding: FragmentParaBinding? = null
     var interstitialAd: InterstitialAd? = null
     override fun onCreateView(
@@ -34,6 +42,7 @@ class Para : Fragment(),ItemClickEvent {
         binding?.paraRecycler?.adapter = ParaListAdapter(
             requireContext(), Para().Position()
         ,this)
+        AudienceNetworkAds.initialize(activity)
         MobileAds.initialize(requireContext()) {}
         //getAdsIsView()
         binding!!.adView.visibility =View.VISIBLE
@@ -42,36 +51,50 @@ class Para : Fragment(),ItemClickEvent {
         return binding?.root
     }
 
-    private fun getAdsIsView() {
+    fun loadFacebookBannerAds(){
+        facebookAdsView = AdView(activity, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
+        binding!!.bannerContainer.visibility = View.VISIBLE
+        binding!!.bannerContainer.addView(facebookAdsView)
+        facebookAdsView!!.loadAd()
 
-        val database = FirebaseDatabase.getInstance().reference.child("isAdsView")
+    }
 
-        val listener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                if (dataSnapshot.value == null) {
-                    return
-                }
-                val database = dataSnapshot.value
-
-                if (database != null) {
-                    if (database as Boolean){
-                        binding!!.adView.visibility =View.VISIBLE
-                        loadAds()
-                        interstitialAd()
-                    }
-                    else{
-                        binding!!.adView.visibility =View.GONE
-                    }
-                }
-                Log.e("lol", "onDataChange: " + database)
+    private fun showFacebookInterstitialAd() {
+        facebookInterstitialAd =
+            com.facebook.ads.InterstitialAd(
+                requireContext(),
+                "1007569787153234_1007570607153152"
+            )
+        val interstitialAdListener: InterstitialAdListener = object : InterstitialAdListener {
+            override fun onError(ad: Ad, adError: com.facebook.ads.AdError) {
+                Log.e(TAG, "Interstitial ad failed to load: " + adError.errorMessage)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
+            override fun onAdLoaded(ad: Ad) {
+                facebookInterstitialAd!!.show()
+            }
 
+            override fun onAdClicked(ad: Ad) {
+                Log.d(TAG, "Interstitial ad clicked!")
+            }
+
+            override fun onLoggingImpression(ad: Ad) {
+                Log.d(TAG, "Interstitial ad impression logged!")
+            }
+
+            override fun onInterstitialDisplayed(ad: Ad) {
+                Log.e(TAG, "Interstitial ad displayed.")
+            }
+
+            override fun onInterstitialDismissed(ad: Ad) {
+                Log.e(TAG, "Interstitial ad dismissed.")
             }
         }
-        database.addValueEventListener(listener)
+        facebookInterstitialAd!!.loadAd(
+            facebookInterstitialAd!!.buildLoadAdConfig()
+                .withAdListener(interstitialAdListener)
+                .build()
+        )
     }
     private fun loadAds() {
         val adRequest = AdRequest.Builder().build()
@@ -79,6 +102,7 @@ class Para : Fragment(),ItemClickEvent {
 
         binding!!.adView.adListener = object : AdListener(){
             override fun onAdFailedToLoad(p0: LoadAdError) {
+                loadFacebookBannerAds()
                 super.onAdFailedToLoad(p0)
                 val toastMessage: String = "ad fail to load"
             }
@@ -156,6 +180,7 @@ class Para : Fragment(),ItemClickEvent {
                                 // Called when fullscreen content failed to show.
                                 // Make sure to set your reference to null so you don't
                                 // show it a second time.
+                                showFacebookInterstitialAd()
                                 this@Para.interstitialAd = null
                                 Log.d("TAG", "The ad failed to show.")
                             }

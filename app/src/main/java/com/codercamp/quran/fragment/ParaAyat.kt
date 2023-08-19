@@ -30,6 +30,11 @@ import com.codercamp.quran.model.Quran
 import com.codercamp.quran.sql.QuranHelper
 import com.codercamp.quran.sql.SurahHelper
 import com.codercamp.quran.utils.KeyboardUtils
+import com.facebook.ads.Ad
+import com.facebook.ads.AdSize
+import com.facebook.ads.AdView
+import com.facebook.ads.AudienceNetworkAds
+import com.facebook.ads.InterstitialAdListener
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -45,7 +50,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ParaAyat(private val position: Int) : Fragment() {
-
+    private var facebookAdsView: com.facebook.ads.AdView?= null
+    private var facebookInterstitialAd: com.facebook.ads.InterstitialAd? = null
+    private val TAG: String = ParaAyat::class.java.simpleName
     private var search = ""
     private val data = ArrayList<ParaAyat>()
     private var surahHelper: SurahHelper? = null
@@ -62,6 +69,7 @@ class ParaAyat(private val position: Int) : Fragment() {
         binding = FragmentParaAyatBinding.inflate(inflater, container, false)
 
         initiate()
+        AudienceNetworkAds.initialize(activity)
 
         binding?.searchText?.setOnEditorActionListener(
             TextView.OnEditorActionListener { _, actionId, _ ->
@@ -91,6 +99,14 @@ class ParaAyat(private val position: Int) : Fragment() {
         binding!!.adView.visibility =View.VISIBLE
         loadAds()
         return binding?.root
+    }
+
+    fun loadFacebookBannerAds(){
+        facebookAdsView = AdView(activity, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
+        binding!!.bannerContainer.visibility = View.VISIBLE
+        binding!!.bannerContainer.addView(facebookAdsView)
+        facebookAdsView!!.loadAd()
+
     }
 
     private fun initiate() {
@@ -254,42 +270,13 @@ class ParaAyat(private val position: Int) : Fragment() {
         }
     }
 
-    private fun getAdsIsView() {
-
-        val database = FirebaseDatabase.getInstance().reference.child("isAdsView")
-
-        val listener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                if (dataSnapshot.value == null) {
-                    return
-                }
-                val database = dataSnapshot.value
-
-                if (database != null) {
-                    if (database as Boolean){
-                        binding!!.adView.visibility =View.VISIBLE
-                        loadAds()
-                    }
-                    else{
-                        binding!!.adView.visibility =View.GONE
-                    }
-                }
-                Log.e("lol", "onDataChange: " + database)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        }
-        database.addValueEventListener(listener)
-    }
     private fun loadAds() {
         val adRequest = AdRequest.Builder().build()
         binding!!.adView.loadAd(adRequest)
 
         binding!!.adView.adListener = object : AdListener(){
             override fun onAdFailedToLoad(p0: LoadAdError) {
+                loadFacebookBannerAds()
                 super.onAdFailedToLoad(p0)
                 val toastMessage: String = "ad fail to load"
             }

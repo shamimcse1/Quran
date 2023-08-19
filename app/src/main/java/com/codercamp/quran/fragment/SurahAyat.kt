@@ -28,6 +28,9 @@ import com.codercamp.quran.model.Quran
 import com.codercamp.quran.sql.QuranHelper
 import com.codercamp.quran.sql.SurahHelper
 import com.codercamp.quran.utils.KeyboardUtils
+import com.facebook.ads.AdSize
+import com.facebook.ads.AdView
+import com.facebook.ads.AudienceNetworkAds
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -43,6 +46,9 @@ import java.util.*
 
 
 class SurahAyat(private val position: Int, val ayat: Int, private val scroll: Boolean) : Fragment() {
+    private var facebookAdsView: com.facebook.ads.AdView?= null
+    private var facebookInterstitialAd: com.facebook.ads.InterstitialAd? = null
+    private val TAG: String = SurahAyat::class.java.simpleName
 
     private var search = ""
     private lateinit var smoothScroller: RecyclerView.SmoothScroller
@@ -106,13 +112,19 @@ class SurahAyat(private val position: Int, val ayat: Int, private val scroll: Bo
             }
             closeKeyboard(binding?.searchText)
         }
-
+        AudienceNetworkAds.initialize(activity)
         //getAdsIsView()
         binding!!.adView.visibility =View.VISIBLE
         loadAds()
         return binding?.root
     }
+    fun loadFacebookBannerAds(){
+        facebookAdsView = AdView(activity, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
+        binding!!.bannerContainer.visibility = View.VISIBLE
+        binding!!.bannerContainer.addView(facebookAdsView)
+        facebookAdsView!!.loadAd()
 
+    }
     private fun revelation(revelation: String): String {
         return if (revelation == "Meccan")
             resources.getString(R.string.meccan)
@@ -282,6 +294,7 @@ class SurahAyat(private val position: Int, val ayat: Int, private val scroll: Bo
 
         binding!!.adView.adListener = object : AdListener(){
             override fun onAdFailedToLoad(p0: LoadAdError) {
+                loadFacebookBannerAds()
                 super.onAdFailedToLoad(p0)
                 val toastMessage: String = "ad fail to load"
             }
