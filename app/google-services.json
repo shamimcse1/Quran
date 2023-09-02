@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "479404884936",
-    "firebase_url": "https://al-quran-85120-default-rtdb.firebaseio.com",
-    "project_id": "al-quran-85120",
-    "storage_bucket": "al-quran-85120.appspot.com"
+    "project_number": "208108284406",
+    "project_id": "quran-bangla-74808",
+    "storage_bucket": "quran-bangla-74808.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:479404884936:android:33603fb3061df277f136fd",
+        "mobilesdk_app_id": "1:208108284406:android:724cbcf468787f401dffd7",
         "android_client_info": {
-          "package_name": "com.codercamp.quran"
+          "package_name": "com.codercamp.quranbangla"
         }
       },
       "oauth_client": [
         {
-          "client_id": "479404884936-rkjb1mh8r7fd9lk2cc2564eu3t6lm59g.apps.googleusercontent.com",
+          "client_id": "208108284406-eb7difl5f69ciem9gvg90nkqc3nlr6gc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCh3QvieAsMYkrzHl_oYY4IIVAJhDiaW-Y"
+          "current_key": "AIzaSyDntBeOMBs8Nov4r6f6D17psicCt4QstNs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "479404884936-rkjb1mh8r7fd9lk2cc2564eu3t6lm59g.apps.googleusercontent.com",
+              "client_id": "208108284406-eb7difl5f69ciem9gvg90nkqc3nlr6gc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

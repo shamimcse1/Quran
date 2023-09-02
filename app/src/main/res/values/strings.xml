@@ -1,6 +1,6 @@
 <resources>
     //Title
-    <string name="app_name">Al-Quran</string>
+    <string name="app_name">Bangla Quran</string>
 
     //Multiple Language
     <string name="para">Para</string>
@@ -271,8 +271,11 @@
         <item>@string/an_naas</item>
     </string-array>
 
-    <string name="banner_ad_sample" translatable="false">Banner Ad Sample</string>
-    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-1337577089653332/7324944680</string>
-    <string name="admob_interstitial_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
+<!--    <string name="banner_ad_sample" translatable="false">Banner Ad Sample</string>-->
+<!--    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-1337577089653332/7324944680</string>-->
+<!--    <string name="admob_interstitial_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>-->
+
+    <string name="facebook_banner_ad_unit_id" translatable="false">IMG_16_9_APP_INSTALL</string>
+    <string name="facebook_interstitial_id" translatable="false">VID_HD_9_16_39S_APP_INSTALL</string>
 
 </resources>

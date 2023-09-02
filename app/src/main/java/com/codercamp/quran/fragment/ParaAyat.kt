@@ -50,7 +50,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ParaAyat(private val position: Int) : Fragment() {
-    private var facebookAdsView: com.facebook.ads.AdView?= null
+    private var facebookAdsView: AdView?= null
     private var facebookInterstitialAd: com.facebook.ads.InterstitialAd? = null
     private val TAG: String = ParaAyat::class.java.simpleName
     private var search = ""
@@ -96,15 +96,14 @@ class ParaAyat(private val position: Int) : Fragment() {
             searchIconClick()
         }
         //getAdsIsView()
-        binding!!.adView.visibility =View.VISIBLE
-        loadAds()
+        loadFacebookBannerAds()
         return binding?.root
     }
 
     fun loadFacebookBannerAds(){
-        facebookAdsView = AdView(activity, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
-        binding!!.bannerContainer.visibility = View.VISIBLE
-        binding!!.bannerContainer.addView(facebookAdsView)
+        facebookAdsView = AdView(activity,   resources.getString(R.string.facebook_banner_ad_unit_id), AdSize.BANNER_HEIGHT_50)
+
+        binding!!.adView.addView(facebookAdsView)
         facebookAdsView!!.loadAd()
 
     }
@@ -270,55 +269,19 @@ class ParaAyat(private val position: Int) : Fragment() {
         }
     }
 
-    private fun loadAds() {
-        val adRequest = AdRequest.Builder().build()
-        binding!!.adView.loadAd(adRequest)
 
-        binding!!.adView.adListener = object : AdListener(){
-            override fun onAdFailedToLoad(p0: LoadAdError) {
-                loadFacebookBannerAds()
-                super.onAdFailedToLoad(p0)
-                val toastMessage: String = "ad fail to load"
-            }
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                val toastMessage: String = "ad loaded"
-
-            }
-            override fun onAdOpened() {
-                super.onAdOpened()
-                val toastMessage: String = "ad is open"
-
-            }
-            override fun onAdClicked() {
-                super.onAdClicked()
-                val toastMessage: String = "ad is clicked"
-            }
-
-            override fun onAdClosed() {
-                super.onAdClosed()
-                val toastMessage: String = "ad is closed"
-
-            }
-            override fun onAdImpression() {
-                super.onAdImpression()
-                val toastMessage: String = "ad impression"
-
-            }
-        }
-    }
     override fun onDetach() {
         super.onDetach()
         binding = null
     }
 
     override fun onPause() {
-        binding!!.adView.pause()
+
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        binding!!.adView.resume()
+
     }
 }

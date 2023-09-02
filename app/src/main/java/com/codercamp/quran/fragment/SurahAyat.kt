@@ -115,13 +115,12 @@ class SurahAyat(private val position: Int, val ayat: Int, private val scroll: Bo
         AudienceNetworkAds.initialize(activity)
         //getAdsIsView()
         binding!!.adView.visibility =View.VISIBLE
-        loadAds()
+        loadFacebookBannerAds()
         return binding?.root
     }
-    fun loadFacebookBannerAds(){
-        facebookAdsView = AdView(activity, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
-        binding!!.bannerContainer.visibility = View.VISIBLE
-        binding!!.bannerContainer.addView(facebookAdsView)
+    private fun loadFacebookBannerAds(){
+        facebookAdsView = AdView(activity, resources.getString(R.string.facebook_banner_ad_unit_id), AdSize.BANNER_HEIGHT_50)
+        binding!!.adView.addView(facebookAdsView)
         facebookAdsView!!.loadAd()
 
     }
@@ -241,7 +240,7 @@ class SurahAyat(private val position: Int, val ayat: Int, private val scroll: Bo
         }
 
         activity?.registerReceiver(ayatFollower, IntentFilter(Constant.SURAH+position))
-        binding!!.adView.resume()
+
     }
 
     override fun onPause() {
@@ -254,85 +253,18 @@ class SurahAyat(private val position: Int, val ayat: Int, private val scroll: Bo
                     else it
             }
         }
-        binding!!.adView.pause()
+
         super.onPause()
     }
 
-    private fun getAdsIsView() {
-
-        val database = FirebaseDatabase.getInstance().reference.child("isAdsView")
-
-        val listener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                if (dataSnapshot.value == null) {
-                    return
-                }
-                val database = dataSnapshot.value
-
-                if (database != null) {
-                    if (database as Boolean){
-                        binding!!.adView.visibility =View.VISIBLE
-                        loadAds()
-                    }
-                    else{
-                        binding!!.adView.visibility =View.GONE
-                    }
-                }
-                Log.e("lol", "onDataChange: " + database)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        }
-        database.addValueEventListener(listener)
-    }
-    private fun loadAds() {
-        val adRequest = AdRequest.Builder().build()
-        binding!!.adView.loadAd(adRequest)
-
-        binding!!.adView.adListener = object : AdListener(){
-            override fun onAdFailedToLoad(p0: LoadAdError) {
-                loadFacebookBannerAds()
-                super.onAdFailedToLoad(p0)
-                val toastMessage: String = "ad fail to load"
-            }
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                val toastMessage: String = "ad loaded"
-
-            }
-            override fun onAdOpened() {
-                super.onAdOpened()
-                val toastMessage: String = "ad is open"
-
-            }
-            override fun onAdClicked() {
-                super.onAdClicked()
-                val toastMessage: String = "ad is clicked"
-            }
-
-            override fun onAdClosed() {
-                super.onAdClosed()
-                val toastMessage: String = "ad is closed"
-
-            }
-            override fun onAdImpression() {
-                super.onAdImpression()
-                val toastMessage: String = "ad impression"
-
-            }
-        }
-    }
     override fun onDetach() {
         super.onDetach()
-        binding!!.adView.resume()
+
         binding = null
 
     }
     override fun onDestroy() {
-        binding!!.adView.destroy()
+
         super.onDestroy()
     }
 }

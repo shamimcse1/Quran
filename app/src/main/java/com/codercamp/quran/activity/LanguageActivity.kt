@@ -13,6 +13,10 @@ import com.codercamp.quran.database.ApplicationData
 import com.codercamp.quran.databinding.ActivityLanguageBinding
 import com.codercamp.quran.theme.ApplicationTheme
 import com.codercamp.quran.utils.ContextUtils
+import com.facebook.ads.Ad
+import com.facebook.ads.AdSize
+import com.facebook.ads.AdView
+import com.facebook.ads.InterstitialAdListener
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -26,7 +30,9 @@ import java.util.*
 class LanguageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLanguageBinding
-
+    private var facebookAdsView: AdView? = null
+    private var facebookInterstitialAd: com.facebook.ads.InterstitialAd? = null
+    private val TAG: String = LanguageActivity::class.java.simpleName
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ApplicationTheme(this)
@@ -34,7 +40,7 @@ class LanguageActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.back.setOnClickListener { finish() }
 
-        when(ApplicationData(this).language) {
+        when (ApplicationData(this).language) {
             "en" -> binding.languageGroup.check(R.id.english)
             "bn" -> binding.languageGroup.check(R.id.bangla)
             "tr" -> binding.languageGroup.check(R.id.turkish)
@@ -42,7 +48,7 @@ class LanguageActivity : AppCompatActivity() {
 
         binding.languageGroup.setOnCheckedChangeListener { group, checkedId ->
             ApplicationData(this).language =
-                when(checkedId) {
+                when (checkedId) {
                     R.id.english -> "en"
                     R.id.bangla -> "bn"
                     R.id.turkish -> "tr"
@@ -54,97 +60,75 @@ class LanguageActivity : AppCompatActivity() {
 
         MobileAds.initialize(this) {}
         binding.adView.visibility = View.VISIBLE
-        loadAds()
+        loadFacebookBannerAds()
+        showFacebookInterstitialAd()
     }
 
     override fun attachBaseContext(newBase: Context?) {
         val localeToSwitchTo = Locale(ApplicationData(newBase!!).language)
-        val localeUpdatedContext: ContextWrapper = ContextUtils.updateLocale(newBase, localeToSwitchTo)
+        val localeUpdatedContext: ContextWrapper =
+            ContextUtils.updateLocale(newBase, localeToSwitchTo)
         super.attachBaseContext(localeUpdatedContext)
     }
 
-   private fun getAdsIsView() {
-
-        val database = FirebaseDatabase.getInstance().reference.child("isAdsView")
-
-        val listener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                if (dataSnapshot.value == null) {
-                    return
-                }
-                val database = dataSnapshot.value
-
-                if (database != null) {
-                    if (database as Boolean){
-
-                    }
-                    else{
-                        binding.adView.visibility = View.GONE
-                    }
-                }
-                Log.e("lol", "onDataChange: " + database)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        }
-        database.addValueEventListener(listener)
-    }
-    private fun loadAds() {
-        val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-
-        binding.adView.adListener = object : AdListener() {
-            override fun onAdFailedToLoad(p0: LoadAdError) {
-                super.onAdFailedToLoad(p0)
-                val toastMessage: String = "ad fail to load"
-            }
-
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                val toastMessage: String = "ad loaded"
-
-            }
-
-            override fun onAdOpened() {
-                super.onAdOpened()
-                val toastMessage: String = "ad is open"
-
-            }
-
-            override fun onAdClicked() {
-                super.onAdClicked()
-                val toastMessage: String = "ad is clicked"
-            }
-
-            override fun onAdClosed() {
-                super.onAdClosed()
-                val toastMessage: String = "ad is closed"
-
-            }
-
-            override fun onAdImpression() {
-                super.onAdImpression()
-                val toastMessage: String = "ad impression"
-
-            }
-        }
-    }
 
     override fun onPause() {
-        binding.adView.pause()
+
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.adView.resume()
+
     }
 
     override fun onDestroy() {
-        binding.adView.destroy()
+
         super.onDestroy();
+    }
+
+    fun loadFacebookBannerAds() {
+        facebookAdsView = AdView(this, resources.getString(R.string.facebook_banner_ad_unit_id), AdSize.BANNER_HEIGHT_50)
+        binding.adView.addView(facebookAdsView)
+        facebookAdsView!!.loadAd()
+
+    }
+
+    private fun showFacebookInterstitialAd() {
+        facebookInterstitialAd =
+            com.facebook.ads.InterstitialAd(
+                this,
+                resources.getString(R.string.facebook_interstitial_id)
+            )
+        val interstitialAdListener: InterstitialAdListener = object : InterstitialAdListener {
+            override fun onError(ad: Ad, adError: com.facebook.ads.AdError) {
+                Log.e(TAG, "Interstitial ad failed to load: " + adError.errorMessage)
+            }
+
+            override fun onAdLoaded(ad: Ad) {
+                facebookInterstitialAd!!.show()
+            }
+
+            override fun onAdClicked(ad: Ad) {
+                Log.d(TAG, "Interstitial ad clicked!")
+            }
+
+            override fun onLoggingImpression(ad: Ad) {
+                Log.d(TAG, "Interstitial ad impression logged!")
+            }
+
+            override fun onInterstitialDisplayed(ad: Ad) {
+                Log.e(TAG, "Interstitial ad displayed.")
+            }
+
+            override fun onInterstitialDismissed(ad: Ad) {
+                Log.e(TAG, "Interstitial ad dismissed.")
+            }
+        }
+        facebookInterstitialAd!!.loadAd(
+            facebookInterstitialAd!!.buildLoadAdConfig()
+                .withAdListener(interstitialAdListener)
+                .build()
+        )
     }
 }

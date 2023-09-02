@@ -20,12 +20,12 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.codercamp.quran"
+        applicationId "com.codercamp.quranbangla"
         minSdkVersion 21
         //noinspection OldTargetApi
         targetSdkVersion 33
-        versionCode 4
-        versionName "1.0.2"
+        versionCode 1
+        versionName "1.0.0"
         signingConfig signingConfigs.release
 
         //Blur
