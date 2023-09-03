@@ -97,7 +97,7 @@ class AboutActivity : AppCompatActivity() {
         showFacebookInterstitialAd()
     }
 
-    fun loadFacebookBannerAds(){
+    private fun loadFacebookBannerAds(){
         facebookAdsView = AdView(this, resources.getString(R.string.facebook_banner_ad_unit_id), AdSize.BANNER_HEIGHT_50)
         binding.adView.addView(facebookAdsView)
         facebookAdsView!!.loadAd()

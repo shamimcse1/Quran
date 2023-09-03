@@ -107,7 +107,7 @@ class TACPP(val context: Activity) {
                 "                  charge you for the app or its services without making it very\n" +
                 "                  clear to you exactly what you’re paying for.\n" +
                 "                $p\n" +
-                "                  The Al-Quran app stores and processes personal data that\n" +
+                "                  The Al-Quran Bangla app stores and processes personal data that\n" +
                 "                  you have provided to us, in order to provide my\n" +
                 "                  Service. It’s your responsibility to keep your phone and\n" +
                 "                  access to the app secure. We therefore recommend that you do\n" +
@@ -116,7 +116,7 @@ class TACPP(val context: Activity) {
                 "                  official operating system of your device. It could make your\n" +
                 "                  phone vulnerable to malware/viruses/malicious programs,\n" +
                 "                  compromise your phone’s security features and it could mean\n" +
-                "                  that the Al-Quran app won’t work properly or at all.\n" +
+                "                  that the Al-Quran Bangla app won’t work properly or at all.\n" +
                 "                </p> <div><p>\n" +
                 "                    The app does use third party services that declare their own\n" +
                 "                    Terms and Conditions.\n" +
@@ -205,7 +205,7 @@ class TACPP(val context: Activity) {
                 "<font color=\""
         private const val policy =  "\">" +
                 "<strong>Privacy Policy</strong> <p>\n" +
-                "                  Coder-Camp built the Al-Quran app as\n" +
+                "                  Coder-Camp built the Al-Quran Bangla app as\n" +
                 "                  a Free app. This SERVICE is provided by\n" +
                 "                  Coder-Camp at no cost and is intended for use as\n" +
                 "                  is.\n" +
@@ -222,7 +222,7 @@ class TACPP(val context: Activity) {
                 "                $p\n" +
                 "                  The terms used in this Privacy Policy have the same meanings\n" +
                 "                  as in our Terms and Conditions, which is accessible at\n" +
-                "                  Al-Quran unless otherwise defined in this Privacy Policy.\n" +
+                "                  Al-Quran Bangla unless otherwise defined in this Privacy Policy.\n" +
                 "                $p<strong>Information Collection and Use</strong>$p\n" +
                 "                  For a better experience, while using our Service, I\n" +
                 "                  may require you to provide us with certain personally\n" +
