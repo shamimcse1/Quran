@@ -44,11 +44,9 @@ import java.util.*
 
 class AboutActivity : AppCompatActivity() {
 
-    private var facebookAdsView: com.facebook.ads.AdView?= null
+    private var facebookAdsView: AdView?= null
     private var facebookInterstitialAd: com.facebook.ads.InterstitialAd? = null
     private val TAG: String = AboutActivity::class.java.simpleName
-
-    var interstitialAd: InterstitialAd? = null
     private lateinit var binding: ActivityAboutBinding
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -163,5 +161,12 @@ class AboutActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
+    }
+
+    override fun onDestroy() {
+        if (facebookAdsView != null) {
+            facebookAdsView!!.destroy()
+        }
+        super.onDestroy()
     }
 }
