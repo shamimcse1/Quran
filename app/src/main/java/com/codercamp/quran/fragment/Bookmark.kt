@@ -1,5 +1,6 @@
 package com.codercamp.quran.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,14 +51,13 @@ class Bookmark : Fragment(), ItemClickEvent {
         }, this)
         binding?.ayatRecycler?.layoutManager = LinearLayoutManager(requireContext())
         binding?.ayatRecycler?.adapter = adapter
-        //getAdsIsView()
-        binding!!.adView.visibility = View.VISIBLE
+
         AudienceNetworkAds.initialize(activity)
         loadFacebookBannerAds()
         return binding?.root
     }
 
-    fun loadFacebookBannerAds() {
+    private fun loadFacebookBannerAds() {
         facebookAdsView = AdView(
             activity,
             resources.getString(R.string.facebook_banner_ad_unit_id),
@@ -107,6 +107,7 @@ class Bookmark : Fragment(), ItemClickEvent {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
         CoroutineScope(Dispatchers.Default).launch {

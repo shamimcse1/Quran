@@ -1,6 +1,5 @@
 package com.codercamp.quran.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,10 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codercamp.quran.R
-import com.codercamp.quran.activity.SurahActivity
 import com.codercamp.quran.adapter.ItemClickEvent
 import com.codercamp.quran.adapter.SurahListAdapter
-import com.codercamp.quran.constant.Para
 import com.codercamp.quran.databinding.FragmentSurahBinding
 import com.codercamp.quran.model.SurahList
 import com.codercamp.quran.sql.SurahHelper
@@ -21,25 +18,19 @@ import com.facebook.ads.AdSize
 import com.facebook.ads.AdView
 import com.facebook.ads.AudienceNetworkAds
 import com.facebook.ads.InterstitialAdListener
-import com.google.android.gms.ads.*
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+import com.facebook.ads.*;
 class Surah : Fragment(), ItemClickEvent {
-    private var facebookAdsView: com.facebook.ads.AdView? = null
+    private var facebookAdsView: AdView? = null
     private var facebookInterstitialAd: com.facebook.ads.InterstitialAd? = null
     private val TAG: String = Surah::class.java.simpleName
     private val data = ArrayList<SurahList>()
     private var adapter: SurahListAdapter? = null
     private var binding: FragmentSurahBinding? = null
-    var interstitialAd: InterstitialAd? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
