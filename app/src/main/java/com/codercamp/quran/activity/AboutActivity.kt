@@ -59,64 +59,6 @@ class AboutActivity : AppCompatActivity() {
         AudienceNetworkAds.initialize(this)
         binding.aboutVersion.text = "Version - ${BuildConfig.VERSION_NAME}"
 
-//        binding.aboutFacebook.setOnClickListener {
-//            try {
-//                packageManager.getPackageInfo("com.facebook.katana", 0)
-//                val i = Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK))
-//                i.setPackage("com.facebook.katana")
-//                startActivity(i)
-//            } catch (e: java.lang.Exception) {
-//                startActivity(
-//                    Intent(
-//                        Intent.ACTION_VIEW, Uri.parse(FACEBOOK_WEB)
-//                    )
-//                )
-//            }
-//        }
-//
-//        binding.aboutInstagram.setOnClickListener {
-//            try {
-//                packageManager.getPackageInfo("com.instagram.android", 0)
-//                val i = Intent(Intent.ACTION_VIEW, Uri.parse(INSTAGRAM))
-//                i.setPackage("com.instagram.android")
-//                startActivity(i)
-//            } catch (e: java.lang.Exception) {
-//                startActivity(
-//                    Intent(
-//                        Intent.ACTION_VIEW, Uri.parse(INSTAGRAM_WEB)
-//                    )
-//                )
-//                Log.println(Log.ASSERT, "error", e.toString())
-//            }
-//        }
-//
-//        binding.aboutTwitter.setOnClickListener {
-//            try {
-//                packageManager.getPackageInfo("com.twitter.android", 0)
-//                val i = Intent(Intent.ACTION_VIEW, Uri.parse(TWITTER))
-//                i.setPackage("com.twitter.android")
-//                startActivity(i)
-//            } catch (e: Exception) {
-//                startActivity(
-//                    Intent(
-//                        Intent.ACTION_VIEW, Uri.parse(TWITTER_WEB)
-//                    )
-//                )
-//                Log.e("error", "$e")
-//            }
-//        }
-//
-//        binding.aboutGithub.setOnClickListener {
-//            try {
-//                val browserIntent = Intent(
-//                    Intent.ACTION_VIEW, Uri.parse(GITHUB)
-//                )
-//                startActivity(browserIntent)
-//            } catch (e: Exception) {
-//                Log.e("error", "$e")
-//            }
-//        }
-//
         binding.aboutEmail.setOnClickListener {
             val intent = Intent(
                 Intent.ACTION_SENDTO, Uri.fromParts(
@@ -150,12 +92,14 @@ class AboutActivity : AppCompatActivity() {
 
 
         MobileAds.initialize(this) {}
+        loadAds()
+        interstitialAd()
     }
 
     fun loadFacebookBannerAds(){
         facebookAdsView = AdView(this, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
-        binding!!.bannerContainer.visibility = View.VISIBLE
-        binding!!.bannerContainer.addView(facebookAdsView)
+        binding.bannerContainer.visibility = View.VISIBLE
+        binding.bannerContainer.addView(facebookAdsView)
         facebookAdsView!!.loadAd()
 
     }

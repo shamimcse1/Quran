@@ -140,8 +140,8 @@ class SettingsActivity : AppCompatActivity() {
     }
     fun loadFacebookBannerAds(){
         facebookAdsView = AdView(this, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
-        binding!!.bannerContainer.visibility = View.VISIBLE
-        binding!!.bannerContainer.addView(facebookAdsView)
+        binding.bannerContainer.visibility = View.VISIBLE
+        binding.bannerContainer.addView(facebookAdsView)
         facebookAdsView!!.loadAd()
 
     }

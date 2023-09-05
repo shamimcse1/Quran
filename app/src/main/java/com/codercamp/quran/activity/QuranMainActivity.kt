@@ -11,6 +11,7 @@ import android.os.Looper
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentPagerAdapter
 import com.codercamp.quran.R
 import com.codercamp.quran.adapter.PagerAdapter
@@ -23,10 +24,14 @@ import com.codercamp.quran.fragment.Para
 import com.codercamp.quran.fragment.Surah
 import com.codercamp.quran.theme.ApplicationTheme
 import com.codercamp.quran.utils.ContextUtils
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import java.text.NumberFormat
 import java.util.*
-
+import com.google.android.play.core.install.model.AppUpdateType
+import com.prongbang.appupdate.AppUpdateInstallerListener
+import com.prongbang.appupdate.AppUpdateInstallerManager
+import com.prongbang.appupdate.InAppUpdateInstallerManager
 
 class QuranMainActivity : AppCompatActivity() {
 
@@ -49,6 +54,41 @@ class QuranMainActivity : AppCompatActivity() {
 
     private var binding: ActivityQuranMainBinding? = null
 
+    private val appUpdateInstallerManager: AppUpdateInstallerManager by lazy {
+        InAppUpdateInstallerManager(this)
+    }
+    private fun popupSnackBarForCompleteUpdate() {
+        val snackBar = Snackbar.make(
+            findViewById(android.R.id.content),
+            "An update has just been downloaded.",
+            Snackbar.LENGTH_INDEFINITE
+        )
+        snackBar.setAction("RESTART") { appUpdateInstallerManager.completeUpdate() }
+        snackBar.setActionTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark))
+        snackBar.show()
+    }
+    private val appUpdateInstallerListener by lazy {
+        object : AppUpdateInstallerListener() {
+            // On downloaded but not installed.
+            override fun onDownloadedButNotInstalled() = popupSnackBarForCompleteUpdate()
+
+            // On failure
+            override fun onFailure(e: Exception)
+            {
+
+            }
+
+            // On not update
+            override fun onNotUpdate() {
+
+            }
+
+            // On cancelled update
+            override fun onCancelled() {
+
+            }
+        }
+    }
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,6 +146,8 @@ class QuranMainActivity : AppCompatActivity() {
                 )
             }
         }
+        appUpdateInstallerManager.addAppUpdateListener(appUpdateInstallerListener)
+        appUpdateInstallerManager.startCheckUpdate()
     }
 
     private fun reCreate() {
@@ -129,6 +171,7 @@ class QuranMainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
+        appUpdateInstallerManager.resumeCheckUpdate(AppUpdateType.FLEXIBLE)
         binding?.let {
             LastRead(this).let { last ->
                 it.surahName.text =
@@ -169,5 +212,10 @@ class QuranMainActivity : AppCompatActivity() {
         builder.setNegativeButton("No",
             DialogInterface.OnClickListener { dialog, id -> null })
         builder.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        appUpdateInstallerManager.onActivityResult(requestCode, resultCode, data)
     }
 }
