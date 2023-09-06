@@ -102,14 +102,15 @@ class Para : Fragment(),ItemClickEvent {
 
         binding!!.adView.adListener = object : AdListener(){
             override fun onAdFailedToLoad(p0: LoadAdError) {
+                binding!!.adView.visibility = View.GONE
                 loadFacebookBannerAds()
                 super.onAdFailedToLoad(p0)
-                val toastMessage: String = "ad fail to load"
             }
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                val toastMessage: String = "ad loaded"
 
+            override fun onAdLoaded() {
+                binding!!.bannerContainer.visibility = View.GONE
+                binding!!.adView.visibility = View.VISIBLE
+                super.onAdLoaded()
             }
             override fun onAdOpened() {
                 super.onAdOpened()
@@ -150,6 +151,9 @@ class Para : Fragment(),ItemClickEvent {
 
     override fun onDestroy() {
         binding!!.adView.destroy()
+        if (facebookAdsView != null){
+            facebookAdsView?.destroy()
+        }
         super.onDestroy()
     }
 

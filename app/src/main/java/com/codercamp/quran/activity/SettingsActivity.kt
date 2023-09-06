@@ -37,7 +37,7 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 class SettingsActivity : AppCompatActivity() {
-    private var facebookAdsView: com.facebook.ads.AdView?= null
+    private var facebookAdsView: com.facebook.ads.AdView? = null
     private var facebookInterstitialAd: com.facebook.ads.InterstitialAd? = null
     private val TAG: String = SettingsActivity::class.java.simpleName
     private lateinit var applicationData: ApplicationData
@@ -46,7 +46,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            when(result.resultCode) {
+            when (result.resultCode) {
                 RESULT_OK -> {
                     reCreate()
                 }
@@ -66,8 +66,8 @@ class SettingsActivity : AppCompatActivity() {
 
         AudienceNetworkAds.initialize(this)
         MobileAds.initialize(this) {}
-       // getAdsIsView()
-        binding.adView.visibility =View.VISIBLE
+        // getAdsIsView()
+        binding.adView.visibility = View.VISIBLE
         loadAds()
         interstitialAd()
         binding.back.setOnClickListener { finish() }
@@ -85,8 +85,7 @@ class SettingsActivity : AppCompatActivity() {
 //                    .start()
                 binding.openFont.rotation = 0f
                 binding.fontSizeExpandable.collapse()
-            }
-            else {
+            } else {
 //                binding.openFont.animate()
 //                    .rotation(180f)
 //                    .start()
@@ -111,12 +110,13 @@ class SettingsActivity : AppCompatActivity() {
                             "mailto",
                             EMAIL, null
                         )
-                    ), "Send email...")
+                    ), "Send email..."
+                )
             )
         }
 
         binding.switchTheme.isChecked = applicationData.darkTheme
-        binding.switchTheme.setOnCheckedChangeListener{ _, isChecked ->
+        binding.switchTheme.setOnCheckedChangeListener { _, isChecked ->
             applicationData.darkTheme = isChecked
             reCreate()
         }
@@ -138,17 +138,19 @@ class SettingsActivity : AppCompatActivity() {
         initFontSeekBarSeek()
 
     }
-    fun loadFacebookBannerAds(){
+
+    fun loadFacebookBannerAds() {
         facebookAdsView = AdView(this, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
         binding.bannerContainer.visibility = View.VISIBLE
         binding.bannerContainer.addView(facebookAdsView)
         facebookAdsView!!.loadAd()
 
     }
+
     private fun showFacebookInterstitialAd() {
         facebookInterstitialAd =
             com.facebook.ads.InterstitialAd(
-               this,
+                this,
                 "1007569787153234_1007570607153152"
             )
         val interstitialAdListener: InterstitialAdListener = object : InterstitialAdListener {
@@ -182,6 +184,7 @@ class SettingsActivity : AppCompatActivity() {
                 .build()
         )
     }
+
     private fun checkColor() {
         binding.greenCheck.visibility = View.GONE
         binding.blueCheck.visibility = View.GONE
@@ -225,7 +228,7 @@ class SettingsActivity : AppCompatActivity() {
         binding.translationSwitch.isChecked = true
         binding.translationExpandable.expand(false)
         binding.translationGroup.check(
-            when(applicationData.translation) {
+            when (applicationData.translation) {
                 ApplicationData.TAISIRUL -> R.id.c_taisirul
                 ApplicationData.MUHIUDDIN -> R.id.c_muhiuddin
                 ApplicationData.ENGLISH -> R.id.c_eng
@@ -240,7 +243,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun initTranslationClick() {
         binding.translationGroup.setOnCheckedChangeListener { _, checkedId ->
-            applicationData.translation = when(checkedId) {
+            applicationData.translation = when (checkedId) {
                 R.id.c_taisirul -> ApplicationData.TAISIRUL
                 R.id.c_muhiuddin -> ApplicationData.MUHIUDDIN
                 R.id.c_eng -> ApplicationData.ENGLISH
@@ -274,15 +277,15 @@ class SettingsActivity : AppCompatActivity() {
     private fun checkFontSeekBar() {
         val arabic = applicationData.arabicFontSize.toInt()
         binding.arabicSizeText.text = "${arabic}sp"
-        binding.arabicTranslationSeek.progress = (arabic-16)/2
+        binding.arabicTranslationSeek.progress = (arabic - 16) / 2
 
         val transliteration = applicationData.transliterationFontSize.toInt()
         binding.transliterationSizeText.text = "${transliteration}sp"
-        binding.transliterationFontSeek.progress = (transliteration-16)/2
+        binding.transliterationFontSeek.progress = (transliteration - 16) / 2
 
         val translation = applicationData.translationFontSize.toInt()
         binding.translationSizeText.text = "${translation}sp"
-        binding.translationSeek.progress = (translation-16)/2
+        binding.translationSeek.progress = (translation - 16) / 2
     }
 
     private fun initFontSeekBarSeek() {
@@ -292,9 +295,10 @@ class SettingsActivity : AppCompatActivity() {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
-                    fromUser: Boolean) {
-                    applicationData.arabicFontSize = ((progress*2)+16).toFloat()
-                    binding.arabicSizeText.text = "${(progress*2)+16}sp"
+                    fromUser: Boolean
+                ) {
+                    applicationData.arabicFontSize = ((progress * 2) + 16).toFloat()
+                    binding.arabicSizeText.text = "${(progress * 2) + 16}sp"
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -314,9 +318,10 @@ class SettingsActivity : AppCompatActivity() {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
-                    fromUser: Boolean) {
-                    applicationData.transliterationFontSize = ((progress*2)+16).toFloat()
-                    binding.transliterationSizeText.text = "${(progress*2)+16}sp"
+                    fromUser: Boolean
+                ) {
+                    applicationData.transliterationFontSize = ((progress * 2) + 16).toFloat()
+                    binding.transliterationSizeText.text = "${(progress * 2) + 16}sp"
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -336,9 +341,10 @@ class SettingsActivity : AppCompatActivity() {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
-                    fromUser: Boolean) {
-                    applicationData.translationFontSize = ((progress*2)+16).toFloat()
-                    binding.translationSizeText.text = "${(progress*2)+16}sp"
+                    fromUser: Boolean
+                ) {
+                    applicationData.translationFontSize = ((progress * 2) + 16).toFloat()
+                    binding.translationSizeText.text = "${(progress * 2) + 16}sp"
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -382,7 +388,8 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         val localeToSwitchTo = Locale(ApplicationData(newBase!!).language)
-        val localeUpdatedContext: ContextWrapper = ContextUtils.updateLocale(newBase, localeToSwitchTo)
+        val localeUpdatedContext: ContextWrapper =
+            ContextUtils.updateLocale(newBase, localeToSwitchTo)
         super.attachBaseContext(localeUpdatedContext)
     }
 
@@ -392,37 +399,40 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.adView.adListener = object : AdListener() {
             override fun onAdFailedToLoad(p0: LoadAdError) {
+                binding.adView.visibility = View.GONE
                 loadFacebookBannerAds()
                 super.onAdFailedToLoad(p0)
-                val toastMessage: String = "ad fail to load"
+
             }
 
             override fun onAdLoaded() {
+                binding.bannerContainer.visibility = View.GONE
+                binding.adView.visibility = View.VISIBLE
                 super.onAdLoaded()
-                val toastMessage: String = "ad loaded"
+
 
             }
 
             override fun onAdOpened() {
                 super.onAdOpened()
-                val toastMessage: String = "ad is open"
+
 
             }
 
             override fun onAdClicked() {
                 super.onAdClicked()
-                val toastMessage: String = "ad is clicked"
+
             }
 
             override fun onAdClosed() {
                 super.onAdClosed()
-                val toastMessage: String = "ad is closed"
+
 
             }
 
             override fun onAdImpression() {
                 super.onAdImpression()
-                val toastMessage: String = "ad impression"
+
 
             }
         }
@@ -440,6 +450,9 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         binding.adView.destroy()
+        if (facebookAdsView != null) {
+            facebookAdsView?.destroy()
+        }
         super.onDestroy();
     }
 

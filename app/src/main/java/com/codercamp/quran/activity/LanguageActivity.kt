@@ -69,6 +69,7 @@ class LanguageActivity : AppCompatActivity() {
         MobileAds.initialize(this) {}
         binding.adView.visibility = View.VISIBLE
         loadAds()
+        interstitialAd()
     }
 
     override fun attachBaseContext(newBase: Context?) {
@@ -83,14 +84,17 @@ class LanguageActivity : AppCompatActivity() {
 
         binding.adView.adListener = object : AdListener() {
             override fun onAdFailedToLoad(p0: LoadAdError) {
+                binding.adView.visibility = View.GONE
                 loadFacebookBannerAds()
                 super.onAdFailedToLoad(p0)
-                val toastMessage: String = "ad fail to load"
+
             }
 
             override fun onAdLoaded() {
+                binding.bannerContainer.visibility = View.GONE
+                binding.adView.visibility = View.VISIBLE
                 super.onAdLoaded()
-                val toastMessage: String = "ad loaded"
+
 
             }
 
@@ -131,6 +135,9 @@ class LanguageActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         binding.adView.destroy()
+        if (facebookAdsView != null){
+            facebookAdsView?.destroy()
+        }
         super.onDestroy();
     }
 
