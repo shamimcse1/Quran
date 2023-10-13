@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.codercamp.quran.R
 import com.codercamp.quran.activity.SurahActivity
 import com.codercamp.quran.adapter.ItemClickEvent
 import com.codercamp.quran.adapter.SurahListAdapter
@@ -59,7 +60,7 @@ class Surah : Fragment(),ItemClickEvent {
         return binding?.root
     }
     fun loadFacebookBannerAds(){
-        facebookAdsView = AdView(activity, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
+        facebookAdsView = AdView(activity,  resources.getString(R.string.facebook_banner), AdSize.BANNER_HEIGHT_50)
         binding!!.bannerContainer.visibility = View.VISIBLE
         binding!!.bannerContainer.addView(facebookAdsView)
         facebookAdsView!!.loadAd()
@@ -70,7 +71,7 @@ class Surah : Fragment(),ItemClickEvent {
         facebookInterstitialAd =
             com.facebook.ads.InterstitialAd(
                 requireContext(),
-                "1007569787153234_1007570607153152"
+                resources.getString(R.string.facebook_interstitial_id)
             )
         val interstitialAdListener: InterstitialAdListener = object : InterstitialAdListener {
             override fun onError(ad: Ad, adError: com.facebook.ads.AdError) {
@@ -182,7 +183,7 @@ class Surah : Fragment(),ItemClickEvent {
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
             requireContext(),
-            "ca-app-pub-1337577089653332/2717493562",
+            resources.getString(R.string.admob_interstitial_id),
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {

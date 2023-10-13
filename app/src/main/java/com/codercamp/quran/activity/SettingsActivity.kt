@@ -140,7 +140,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     fun loadFacebookBannerAds() {
-        facebookAdsView = AdView(this, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
+        facebookAdsView = AdView(this,  resources.getString(R.string.facebook_banner), AdSize.BANNER_HEIGHT_50)
         binding.bannerContainer.visibility = View.VISIBLE
         binding.bannerContainer.addView(facebookAdsView)
         facebookAdsView!!.loadAd()
@@ -151,7 +151,7 @@ class SettingsActivity : AppCompatActivity() {
         facebookInterstitialAd =
             com.facebook.ads.InterstitialAd(
                 this,
-                "1007569787153234_1007570607153152"
+                resources.getString(R.string.facebook_interstitial_id)
             )
         val interstitialAdListener: InterstitialAdListener = object : InterstitialAdListener {
             override fun onError(ad: Ad, adError: com.facebook.ads.AdError) {

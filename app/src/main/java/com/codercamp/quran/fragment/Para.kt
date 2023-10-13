@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.codercamp.quran.R
 import com.codercamp.quran.adapter.ItemClickEvent
 import com.codercamp.quran.adapter.ParaListAdapter
 import com.codercamp.quran.constant.Para
@@ -52,7 +53,7 @@ class Para : Fragment(),ItemClickEvent {
     }
 
     fun loadFacebookBannerAds(){
-        facebookAdsView = AdView(activity, "1007569787153234_1007570497153163", AdSize.BANNER_HEIGHT_50)
+        facebookAdsView = AdView(activity, resources.getString(R.string.facebook_banner), AdSize.BANNER_HEIGHT_50)
         binding!!.bannerContainer.visibility = View.VISIBLE
         binding!!.bannerContainer.addView(facebookAdsView)
         facebookAdsView!!.loadAd()
@@ -63,7 +64,7 @@ class Para : Fragment(),ItemClickEvent {
         facebookInterstitialAd =
             com.facebook.ads.InterstitialAd(
                 requireContext(),
-                "1007569787153234_1007570607153152"
+                resources.getString(R.string.facebook_interstitial_id)
             )
         val interstitialAdListener: InterstitialAdListener = object : InterstitialAdListener {
             override fun onError(ad: Ad, adError: com.facebook.ads.AdError) {
