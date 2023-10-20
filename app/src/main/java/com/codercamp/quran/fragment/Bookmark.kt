@@ -183,7 +183,7 @@ class Bookmark : Fragment(), ItemClickEvent {
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
             requireContext(),
-            "ca-app-pub-1337577089653332/2717493562",
+            resources.getString(R.string.admob_interstitial_id),
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
